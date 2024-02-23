@@ -148,7 +148,7 @@ function loadBlocks(){
             const img = document.createElement('img')
             img.src = `./assets/images/blocks/${color}_${material}.png`
             img.setAttribute('block', `${color}_${material}`)
-            img.setAttribute('class', 'block w-5 h-5 ly-bg-light-hover border ly-border-light cursor-pointer [&:hover]:ring-2 [&:hover]:ly-ring-dark [&[selected]]:ring-2 [&[selected]]:ly-ring-dark')
+            img.setAttribute('class', 'block select-none w-5 h-5 ly-bg-light-hover border ly-border-light cursor-pointer [&:hover]:ring-2 [&:hover]:ly-ring-dark [&[selected]]:ring-2 [&[selected]]:ly-ring-dark')
             blocks.appendChild(img)
         }
     ))
