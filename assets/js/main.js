@@ -282,6 +282,10 @@ function load(){
         block.classList.add('cursor-grabbing')
     })
 
+    document.getElementById('block-fill').addEventListener('click', () => {
+        document.querySelectorAll('.pixel').forEach(paintPixel)
+    })
+
     loadBlocks()
     loadSettings()
 }
