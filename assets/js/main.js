@@ -1,3 +1,17 @@
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+window.pickupBlock = false
 window.mouseDown = null
 
 window.addEventListener('mousedown', event => {
@@ -55,6 +69,12 @@ rowTemplate.setAttribute('class', 'row flex gap-[0.02px] ly-bg-dark-border');
 const pixelTemplate = document.createElement('div');
 pixelTemplate.setAttribute('class', 'pixel ly-bg-light w-5 h-5');
 
+function disableBlockPickup(){
+    window.pickupBlock = false
+
+    document.getElementById('block').classList.remove('cursor-grabbing')
+}
+
 function paintPixel(pixel){
     const blockImage = document.querySelector('.block[selected]').src
     if (blockImage == null) return
@@ -71,12 +91,26 @@ function clearPixel(pixel){
     pixel.removeAttribute('selected')
 }
 
+function pickupPixel(pixel){
+    const selectedBlock = pixel.getAttribute('selected')
+
+    const block = document.querySelector(`.block[block="${selectedBlock}"]`)
+
+    selectBlock(block)
+}
+
 function loadPixel(pixel) {
     pixel.addEventListener('mousedown', event => {
         if (event.button == 0) {
-            paintPixel(pixel)
+            if (window.pickupBlock && pixel.hasAttribute('selected')) {
+                pickupPixel(pixel)
+            } else {
+                paintPixel(pixel)
+            }
         } else if (event.button == 2) {
             clearPixel(pixel)
+
+            disableBlockPickup()
         }
     })
 
@@ -93,6 +127,19 @@ function loadPixel(pixel) {
     })
 }
 
+function selectBlock(block){
+    try {
+        document.querySelector('.block[selected]').removeAttribute('selected')
+    } catch (error) {}
+
+    block.setAttribute('selected', '')
+
+    document.getElementById('selected-block-img').src = block.src
+    document.getElementById('selected-block-name').innerText = block.getAttribute('block')
+
+    disableBlockPickup()
+}
+
 function loadBlocks(){
     const blocks = document.getElementById('blocks')
 
@@ -106,14 +153,11 @@ function loadBlocks(){
         }
     ))
 
-    document.querySelector('.block[src="./assets/images/blocks/white_wool.png"]')
-        .setAttribute('selected', '')
+    selectBlock(document.querySelector('.block[src="./assets/images/blocks/white_wool.png"]'))
 
     document.querySelectorAll('.block').forEach(block =>
         block.addEventListener('click', () => {
-            document.querySelector('.block[selected]').removeAttribute('selected')
-
-            block.setAttribute('selected', '')
+            selectBlock(block)
         }
     ))
 
@@ -212,16 +256,31 @@ function load(){
 
     document.querySelectorAll('.pixel').forEach(loadPixel)
 
-    document.getElementById('block-copy').addEventListener('click', () =>
-        navigator.clipboard.writeText(genBlockCommand())
-    )
+    document.getElementById('block-copy').addEventListener('click', () => {
+        disableBlockPickup()
 
-    document.getElementById('block-clear').addEventListener('click', () =>
+        navigator.clipboard.writeText(genBlockCommand())
+    })
+
+    document.getElementById('block-clear').addEventListener('click', () => {
         document.querySelectorAll('.pixel[selected]')
             .forEach(
                 clearPixel
             )
-    )
+
+        disableBlockPickup()
+    })
+
+    document.getElementById('download-mcfunction').addEventListener('click', () => {
+        disableBlockPickup()
+
+        download('custom_block.mcfunction', genBlockCommand())
+    })
+
+    document.getElementById('block-pickup').addEventListener('click', () => {
+        window.pickupBlock = true
+        block.classList.add('cursor-grabbing')
+    })
 
     loadBlocks()
     loadSettings()

@@ -47,10 +47,20 @@
         </div>
     </div>
     <header class="ly-flex-center ly-card flex-row justify-between w-screen fixed bottom-0 left-0 py-4">
-        <span class="w-full"></span>
+        <div class="w-full">
+            <div class="flex gap-2 items-center">
+                <div class="ly-card p-1">
+                    <img id="selected-block-img" class="w-6 h-6">
+                </div>
+                <p id="selected-block-name"></p>
+            </div>
+        </div>
         <div class="w-full ly-flex-center gap-2">
-            <button id="block-copy" class="ly-button">Copy</button>
-            <button id="block-clear" class="ly-button">Clear</button>
+            <button id="download-mcfunction" class="ly-button text-nowrap">Download as .mcfunction</button>
+            <!-- <button id="download-datapack" class="ly-button text-nowrap">Download as data-pack</button> -->
+            <button id="block-copy" class="ly-button text-nowrap">Copy to Clipboard</button>
+            <button id="block-pickup" class="ly-button text-nowrap">Pickup</button>
+            <button id="block-clear" class="ly-button text-nowrap">Clear</button>
         </div>
         <div class="w-full flex justify-end">
             <a href="https://github.com/lullaby6/mc-block-creator" target="_blank" class="ly-button ly-flex-center gap-1 cursor-pointer">
