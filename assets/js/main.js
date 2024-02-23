@@ -75,6 +75,28 @@ function disableBlockPickup(){
     document.getElementById('block').classList.remove('cursor-grabbing')
 }
 
+function getBlockName() {
+    let blockName = "custom_block"
+    let inputValue = document.getElementById('block-name').value
+
+    if (inputValue != "") {
+        blockName = inputValue
+    }
+
+    return blockName
+}
+
+function getBlockBase() {
+    let blockBase = null
+    let inputValue = document.getElementById('block-base').value
+
+    if (inputValue != "") {
+        blockBase = inputValue
+    }
+
+    return blockBase
+}
+
 function paintPixel(pixel){
     const blockImage = document.querySelector('.block[selected]').src
     if (blockImage == null) return
@@ -274,10 +296,16 @@ function load(){
     document.getElementById('download-mcfunction').addEventListener('click', () => {
         disableBlockPickup()
 
-        download('custom_block.mcfunction', genBlockCommand())
+        const blockName = getBlockName()
+        download(`${blockName}.mcfunction`, genBlockCommand())
     })
 
     document.getElementById('block-pickup').addEventListener('click', () => {
+        if (window.pickupBlock) {
+            disableBlockPickup()
+
+            return
+        }
         window.pickupBlock = true
         block.classList.add('cursor-grabbing')
     })
@@ -297,6 +325,15 @@ function genBlockCommand(){
 
     let output = "";
 
+    const blockName = getBlockName();
+    const blockBase = getBlockBase();
+
+    output += `execute align xyz run summon marker ~ ~ ~ {Tags:["mc_block_creator.marker.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.marker"]}\n`
+
+    if (blockBase != null) {
+        output += `setblock ~ ~ ~ ${blockBase}\n`
+    }
+
     document.querySelectorAll('.pixel[selected]').forEach(pixel => {
         var rows = Array.from(pixel.parentNode.parentNode.children);
         var row = rows.indexOf(pixel.parentNode);
@@ -306,14 +343,14 @@ function genBlockCommand(){
         var block = pixel.getAttribute('selected');
 
         output += `
-execute align xyz positioned ~ ~ ~-.005 run summon block_display ~ ~ ~ {Tags:["block_creator.block_display.${blockID}"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0 + (0.0625 * row)}f,${0}f],scale:[0.0625f,0.0625f,0.01f]},block_state:{Name:"minecraft:${block}"}}\n
-execute align xyz positioned ~ ~ ~-.005 run summon block_display ~ ~ ~ {Tags:["block_creator.block_display.${blockID}"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0 + (0.0625 * row)}f,${1}f],scale:[0.0625f,0.0625f,0.01f]},block_state:{Name:"minecraft:${block}"}}\n
+execute align xyz positioned ~ ~ ~-.005 run summon block_display ~ ~ ~ {Tags:["mc_block_creator.block_display.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.block_display"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0 + (0.0625 * row)}f,${0}f],scale:[0.0625f,0.0625f,0.01f]},block_state:{Name:"minecraft:${block}"}}\n
+execute align xyz positioned ~ ~ ~-.005 run summon block_display ~ ~ ~ {Tags:["mc_block_creator.block_display.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.block_display"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0 + (0.0625 * row)}f,${1}f],scale:[0.0625f,0.0625f,0.01f]},block_state:{Name:"minecraft:${block}"}}\n
 
-execute align xyz positioned ~-.005 ~ ~ run summon block_display ~ ~ ~ {Tags:["block_creator.block_display.${blockID}"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0}f,${0 + (0.0625 * row)}f,${0 + (0.0625 * column)}f],scale:[0.01f,0.0625f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
-execute align xyz positioned ~-.005 ~ ~ run summon block_display ~ ~ ~ {Tags:["block_creator.block_display.${blockID}"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${1}f,${0 + (0.0625 * row)}f,${0 + (0.0625 * column)}f],scale:[0.01f,0.0625f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
+execute align xyz positioned ~-.005 ~ ~ run summon block_display ~ ~ ~ {Tags:["mc_block_creator.block_display.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.block_display"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0}f,${0 + (0.0625 * row)}f,${0 + (0.0625 * column)}f],scale:[0.01f,0.0625f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
+execute align xyz positioned ~-.005 ~ ~ run summon block_display ~ ~ ~ {Tags:["mc_block_creator.block_display.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.block_display"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${1}f,${0 + (0.0625 * row)}f,${0 + (0.0625 * column)}f],scale:[0.01f,0.0625f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
 
-execute align xyz positioned ~ ~ ~ run summon block_display ~ ~ ~ {Tags:["block_creator.block_display.${blockID}"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0}f,${0 + (0.0625 * row)}f],scale:[0.0625f,0.01f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
-execute align xyz positioned ~ ~1 ~ run summon block_display ~ ~ ~ {Tags:["block_creator.block_display.${blockID}"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0}f,${0 + (0.0625 * row)}f],scale:[0.0625f,0.01f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
+execute align xyz positioned ~ ~ ~ run summon block_display ~ ~ ~ {Tags:["mc_block_creator.block_display.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.block_display"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0}f,${0 + (0.0625 * row)}f],scale:[0.0625f,0.01f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
+execute align xyz positioned ~ ~1 ~ run summon block_display ~ ~ ~ {Tags:["mc_block_creator.block_display.${blockID}","mc_block_creator.block.${blockName}","mc_block_creator.block_display"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[${0 + (0.0625 * column)}f,${0}f,${0 + (0.0625 * row)}f],scale:[0.0625f,0.01f,0.0625f]},block_state:{Name:"minecraft:${block}"}}\n
 `
     })
 

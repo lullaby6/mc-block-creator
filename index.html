@@ -13,13 +13,13 @@
     <script src="./assets/libs/lullaby-ui.js"></script>
     <script src="./assets/js/main.js"></script>
 </head>
-<body>
-    <div class="ly-flex-center w-screen h-screen">
+<body class="flex flex-col">
+    <div class="ly-flex-center w-screen h-[90vh]">
         <div class="flex justify-between w-[90vw]">
             <div class="flex justify-start relative w-full">
                 <div class="ly-card gap-2 p-2 min-w-64 h-64 overflow-y-hidden">
                     <div class="w-full flex justify-between gap-2 items-center">
-                        <input type="text" value="diamond_block" name="search-block" id="search-block" spellcheck="false" placeholder="Block ID..." class="ly-input py-0.5 w-full">
+                        <input type="text" value="diamond_block" name="search-block" id="search-block" spellcheck="false" placeholder="Texture name..." class="ly-input py-0.5 w-full">
                         <div class="ly-card p-1 w-fit">
                             <img src="./assets/images/blocks/diamond_block.png" block="diamond_block" id="block-search" alt="" class="block min-w-5 min-h-5 ly-bg-light-hover border ly-border-light cursor-pointer [&:hover]:ring-1 [&:hover]:ly-ring-light [&[selected]]:ring-2 [&[selected]]:ly-ring-dark">
                         </div>
@@ -31,7 +31,7 @@
             <div class="ly-flex-center w-full">
                 <div id="block" class="rotate-180 border ly-border-dark flex flex-col gap-[0.02px] ly-bg-dark-border"></div>
             </div>
-            <div class="flex justify-end relative w-full">
+            <div class="flex items-end flex-col gap-2 justify-start relative w-full">
                 <div class="ly-card px-3 pt-2 pb-4 gap-1 w-64 h-fit">
                     <h3 class="text-lg">Settings</h3>
                     <label class="ly-card flex-row px-4 py-1 gap-1.5 w-full cursor-pointer select-none">
@@ -43,10 +43,21 @@
                         <p>PNG Background</p>
                     </label>
                 </div>
+                <div class="ly-card px-3 pt-2 pb-4 gap-1 w-64 h-fit">
+                    <h3 class="text-lg">Block</h3>
+                    <div class="flex flex-col">
+                        <label for="block-name">Block name</label>
+                        <input type="text" value="custom_block" placeholder="Block name..." name="block-name" id="block-name" autocomplete="off" spellcheck="false" class="ly-input">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="block-base">Base block</label>
+                        <input type="text" placeholder="Block ID... (minecraft:stone)" name="block-base" id="block-base" autocomplete="off" spellcheck="false" class="ly-input">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <header class="ly-flex-center ly-card flex-row justify-between w-screen fixed bottom-0 left-0 py-4">
+    <header class="ly-flex-center ly-card flex-row justify-between w-screen h-[10vh] py-4">
         <div class="w-full">
             <div class="flex gap-2 items-center">
                 <div class="ly-card p-1">
