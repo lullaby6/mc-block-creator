@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Block Creator</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="./assets/libs/lullaby-ui.js"></script>
+    <script src="./assets/js/main.js"></script>
+</head>
+<body>
+    <div class="ly-flex-center w-screen h-screen">
+        <div class="flex justify-between w-[90vw]">
+            <div class="flex justify-start relative w-full">
+                <div class="ly-card gap-2 p-2 min-w-64 h-64 overflow-y-hidden">
+                    <div class="w-full flex justify-between gap-2 items-center">
+                        <input type="text" value="diamond_block" name="search-block" id="search-block" spellcheck="false" placeholder="Block ID..." class="ly-input py-0.5 w-full">
+                        <div class="ly-card p-1 w-fit">
+                            <img src="./assets/images/blocks/diamond_block.png" block="diamond_block" id="block-search" alt="" class="block min-w-5 min-h-5 ly-bg-light-hover border ly-border-light cursor-pointer [&:hover]:ring-1 [&:hover]:ly-ring-light [&[selected]]:ring-2 [&[selected]]:ly-ring-dark">
+                        </div>
+                    </div>
+                    <div id="blocks" class="grid grid-cols-8 gap-2 p-3 w-full border ly-border-light rounded shadow overflow-y-scroll">
+                    </div>
+                </div>
+            </div>
+            <div class="ly-flex-center w-full">
+                <div id="block" class="rotate-180 border ly-border-dark flex flex-col gap-[0.02px] ly-bg-dark-border"></div>
+            </div>
+            <div class="flex justify-end relative w-full">
+                <div class="ly-card px-3 py-2 gap-1 w-64 h-64">
+                    <h3 class="text-lg">Settings</h3>
+                    <label class="ly-card flex-row px-4 py-1 gap-1.5 w-full cursor-pointer select-none">
+                        <input type="checkbox" checked name="grid" id="grid" class="cursor-pointer">
+                        <p>Grid</p>
+                    </label>
+                    <label class="ly-card flex-row px-4 py-1 gap-1.5 w-full cursor-pointer select-none">
+                        <input type="checkbox" checked name="png" id="png" class="cursor-pointer">
+                        <p>PNG Background</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="ly-flex-center ly-card flex-row w-screen fixed bottom-0 left-0 py-4">
+        <button id="block-copy" class="ly-button">Copy</button>
+        <button id="block-clear" class="ly-button">Clear</button>
+    </header>
+</body>
+</html>
