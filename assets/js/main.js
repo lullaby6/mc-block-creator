@@ -130,7 +130,7 @@ function loadSettings(){
     const gridCheckbox = document.getElementById('grid')
 
     let gridStorage = localStorage.getItem('grid')
-    if (gridStorage == null || gridStorage == 'false') {
+    if (gridStorage == 'false') {
         gridCheckbox.checked = false
 
         block.style.gap = '0'
@@ -177,8 +177,7 @@ function loadSettings(){
     })
 
     let pngStorage = localStorage.getItem('png')
-
-    if (pngStorage == null || pngStorage == 'false') {
+    if (pngStorage == 'false') {
         pngCheckbox.checked = false
     }
 
@@ -186,7 +185,7 @@ function loadSettings(){
     document.querySelectorAll('.row').forEach(row => {
         row.querySelectorAll('.pixel').forEach(pixel => {
             pixel.classList.add(mode)
-            if (pngStorage == 'true') {
+            if (pngStorage != 'false') {
                 pixel.classList.add(`${mode}:bg-[#bfbfbf]`)
             }
         })

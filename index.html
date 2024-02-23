@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
 
     <script src="./assets/libs/lullaby-ui.js"></script>
     <script src="./assets/js/main.js"></script>
@@ -31,7 +32,7 @@
                 <div id="block" class="rotate-180 border ly-border-dark flex flex-col gap-[0.02px] ly-bg-dark-border"></div>
             </div>
             <div class="flex justify-end relative w-full">
-                <div class="ly-card px-3 py-2 gap-1 w-64 h-64">
+                <div class="ly-card px-3 pt-2 pb-4 gap-1 w-64 h-fit">
                     <h3 class="text-lg">Settings</h3>
                     <label class="ly-card flex-row px-4 py-1 gap-1.5 w-full cursor-pointer select-none">
                         <input type="checkbox" checked name="grid" id="grid" class="cursor-pointer">
@@ -45,9 +46,18 @@
             </div>
         </div>
     </div>
-    <header class="ly-flex-center ly-card flex-row w-screen fixed bottom-0 left-0 py-4">
-        <button id="block-copy" class="ly-button">Copy</button>
-        <button id="block-clear" class="ly-button">Clear</button>
+    <header class="ly-flex-center ly-card flex-row justify-between w-screen fixed bottom-0 left-0 py-4">
+        <span class="w-full"></span>
+        <div class="w-full ly-flex-center gap-2">
+            <button id="block-copy" class="ly-button">Copy</button>
+            <button id="block-clear" class="ly-button">Clear</button>
+        </div>
+        <div class="w-full flex justify-end">
+            <a href="https://github.com/lullaby6/mc-block-creator" target="_blank" class="ly-button ly-flex-center gap-1 cursor-pointer">
+                <iconify-icon class="text-lg" icon="mdi:github"></iconify-icon>
+                <p>Github</p>
+            </a>
+        </div>
     </header>
 </body>
 </html>
