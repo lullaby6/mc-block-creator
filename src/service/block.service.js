@@ -35,10 +35,22 @@ function GenerateJSONObject(blockData, blockType, blockID, baseBlock) {
     };
 }
 
-function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "") {
+function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", seeThrough = false) {
     const UUID = crypto.randomUUID();
     let MCFunction = "";
     let faces = {};
+
+    switch (seeThrough) {
+        case false:
+            seeThrough = 0
+            break
+        case true:
+            seeThrough = 0
+            break
+        default:
+            seeThrough = 0
+            break
+    }
 
     if (Array.isArray(blockData) && blockType !== "TABLE") {
         faces = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
@@ -119,7 +131,7 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "") {
                 `mc_block_creator.custom_block.text_display.${blockID}.${UUID}`,
             ].join('","');
 
-            MCFunction += `execute align xyz run summon text_display ~.5 ~.5 ~.5 {billboard:"fixed",default_background:0b,shadow:0b,see_through:0b,alignment:"center",Tags:["${pixelTags}"],brightness:{sky:15,block:15},transformation:{left_rotation:${rotation},right_rotation:[0f,0f,0f,1f],translation:[${x_f}f,${y_f}f,${z_f}f],scale:[${PIXEL_SCALE}f,${PIXEL_SCALE}f,${PIXEL_SCALE}f]},text:{"sprite":"block/${pixelBlockId}"},background:16383998}\n`;
+            MCFunction += `execute align xyz run summon text_display ~.5 ~.5 ~.5 {billboard:"fixed",default_background:0b,shadow:0b,see_through:${seeThrough}b,alignment:"center",Tags:["${pixelTags}"],brightness:{sky:15,block:15},transformation:{left_rotation:${rotation},right_rotation:[0f,0f,0f,1f],translation:[${x_f}f,${y_f}f,${z_f}f],scale:[${PIXEL_SCALE}f,${PIXEL_SCALE}f,${PIXEL_SCALE}f]},text:{"sprite":"block/${pixelBlockId}"},background:16383998}\n`;
         }
     }
 
