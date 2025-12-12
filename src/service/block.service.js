@@ -25,51 +25,46 @@ function downloadFile(filename, content, type = "text/plain") {
     URL.revokeObjectURL(url);
 }
 
-function GenerateJSONObject(blockData, blockType, blockID, baseBlock) {
+function GenerateJSONObject(blockData, blockType, blockID, baseBlock, activeFaces) {
     return {
         blockID: blockID || "custom_block",
         blockType: blockType,
         baseBlock: baseBlock,
+        faces: activeFaces,
         pixels: blockData,
         timestamp: new Date().toISOString()
     };
 }
 
-function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", seeThrough = false) {
+function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", activeFaces = null, seeThrough = false) {
     const UUID = crypto.randomUUID();
     let MCFunction = "";
-    let faces = {};
+    let facesGeometry = {};
 
     switch (seeThrough) {
-        case false:
-            seeThrough = 0
-            break
-        case true:
-            seeThrough = 0
-            break
-        default:
-            seeThrough = 0
-            break
+        case false: seeThrough = 0; break;
+        case true: seeThrough = 0; break;
+        default: seeThrough = 0; break;
     }
 
     if (Array.isArray(blockData) && blockType !== "TABLE") {
-        faces = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
+        facesGeometry = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
     } else {
         switch (blockType) {
             case "SOLID":
-                faces = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
+                facesGeometry = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
                 break;
             case "TABLE":
-                faces = {
+                facesGeometry = {
                     south: blockData.sides, north: blockData.sides, east: blockData.sides, west: blockData.sides,
                     up: blockData.caps, down: blockData.caps
                 };
                 break;
             case "UNIQUE":
-                faces = blockData;
+                facesGeometry = blockData;
                 break;
             default:
-                faces = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
+                facesGeometry = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
                 break;
         }
     }
@@ -91,7 +86,11 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", seeTh
 
     MCFunction += `execute align xyz run summon marker ~.5 ~.5 ~.5 {Tags:["${markerTags}"]}\n\n`;
 
-    for (const [faceName, pixels] of Object.entries(faces)) {
+    for (const [faceName, pixels] of Object.entries(facesGeometry)) {
+        if (activeFaces && activeFaces[faceName] === false) {
+            continue;
+        }
+
         if (!pixels || !Array.isArray(pixels)) continue;
 
         const rotation = FACE_ROTATIONS[faceName] || FACE_ROTATIONS.south;
@@ -139,22 +138,22 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", seeTh
     return MCFunction;
 }
 
-async function CopyMCFunction(blockData, blockType, blockID, baseBlock = "") {
+async function CopyMCFunction(blockData, blockType, blockID, baseBlock = "", activeFaces) {
     try {
-        await navigator.clipboard.writeText(GenerateMCFunction(blockData, blockType, blockID, baseBlock));
+        await navigator.clipboard.writeText(GenerateMCFunction(blockData, blockType, blockID, baseBlock, activeFaces));
     } catch (err) {
         console.error("Error copying mcfunction", err);
     }
 }
 
-function ExportMCFunction(blockData, blockType, blockID, baseBlock = "") {
-    const content = GenerateMCFunction(blockData, blockType, blockID, baseBlock);
+function ExportMCFunction(blockData, blockType, blockID, baseBlock = "", activeFaces) {
+    const content = GenerateMCFunction(blockData, blockType, blockID, baseBlock, activeFaces);
     const filename = `${blockID || "block"}.mcfunction`;
     downloadFile(filename, content, "text/plain");
 }
 
-async function CopyJSON(blockData, blockType, blockID, baseBlock = "") {
-    const data = GenerateJSONObject(blockData, blockType, blockID, baseBlock);
+async function CopyJSON(blockData, blockType, blockID, baseBlock = "", activeFaces) {
+    const data = GenerateJSONObject(blockData, blockType, blockID, baseBlock, activeFaces);
     try {
         await navigator.clipboard.writeText(JSON.stringify(data, null, 4));
     } catch (err) {
@@ -162,8 +161,8 @@ async function CopyJSON(blockData, blockType, blockID, baseBlock = "") {
     }
 }
 
-function ExportJSON(blockData, blockType, blockID, baseBlock = "") {
-    const data = GenerateJSONObject(blockData, blockType, blockID, baseBlock);
+function ExportJSON(blockData, blockType, blockID, baseBlock = "", activeFaces) {
+    const data = GenerateJSONObject(blockData, blockType, blockID, baseBlock, activeFaces);
     const filename = `${blockID || "block"}.json`;
     downloadFile(filename, JSON.stringify(data, null, 4), "application/json");
 }

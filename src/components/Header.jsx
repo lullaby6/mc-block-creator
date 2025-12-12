@@ -29,6 +29,9 @@ export default () => {
 	const blockIDStore = useBlockStore((state) => state.blockID);
 	const blockTypeStore = useBlockStore((state) => state.blockType);
 
+	const facesStore = useBlockStore((state) => state.faces);
+	const setFaces = useBlockStore((state) => state.setFaces);
+
 	const setPixels = useBlockStore((state) => state.setPixels);
 	const setBlockID = useBlockStore((state) => state.setBlockID);
 	const setBlockType = useBlockStore((state) => state.setBlockType);
@@ -42,20 +45,20 @@ export default () => {
 		reader.onload = (event) => {
 			try {
 				const rawJson = JSON.parse(event.target.result);
-
 				const json = ValidateBlockJSON(rawJson);
 
 				if (json.pixels) setPixels(json.pixels);
 				if (json.blockID) setBlockID(json.blockID);
 				if (json.blockType) setBlockType(json.blockType);
 				if (json.baseBlock !== undefined) setBaseBlock(json.baseBlock);
+
+				if (json.faces) setFaces(json.faces);
 			} catch (error) {
 				console.error("Error importando JSON:", error);
 				alert("El archivo no es válido o está corrupto.");
 			}
 		};
 		reader.readAsText(file);
-
 		e.target.value = "";
 	};
 
@@ -93,7 +96,8 @@ export default () => {
 								pixelsStore,
 								blockTypeStore,
 								blockIDStore,
-								baseBlockStore
+								baseBlockStore,
+								facesStore
 							)
 						}>
 						<IconFileArrowRight className="text-neutral-700 size-5" />
@@ -107,7 +111,8 @@ export default () => {
 								pixelsStore,
 								blockTypeStore,
 								blockIDStore,
-								baseBlockStore
+								baseBlockStore,
+								facesStore
 							)
 						}>
 						<IconClipboard className="text-neutral-700 size-5" />
@@ -121,7 +126,8 @@ export default () => {
 								pixelsStore,
 								blockTypeStore,
 								blockIDStore,
-								baseBlockStore
+								baseBlockStore,
+								facesStore
 							)
 						}>
 						<IconDownload className="text-neutral-700 size-5" />
@@ -135,7 +141,8 @@ export default () => {
 								pixelsStore,
 								blockTypeStore,
 								blockIDStore,
-								baseBlockStore
+								baseBlockStore,
+								facesStore
 							)
 						}>
 						<IconClipboard className="text-neutral-700 size-5" />
