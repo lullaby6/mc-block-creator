@@ -19,7 +19,7 @@ https://mc-block-creator.vercel.app/
 
 ## Contributing
 
-This project uses [React](https://es.react.dev/) and [Vite](https://vitejs.dev/).
+This project uses [React](https://es.react.dev/), [Vite](https://vitejs.dev/) and [Tailwind](https://tailwindcss.com/).
 
 1. Make sure you have [node](https://nodejs.org/), npm, and [git](https://git-scm.com/) installed.
 2. Clone the repository.
