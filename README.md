@@ -13,4 +13,4 @@
 
 ## License
 
--   [AGPLv3](https://github.com/lullaby6/data-packs/blob/main/LICENSE)
+-   [AGPL-3.0](https://github.com/lullaby6/data-packs/blob/main/LICENSE)
