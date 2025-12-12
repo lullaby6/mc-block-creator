@@ -8,7 +8,6 @@ https://mc-block-creator.vercel.app/
 
 -   Tools draggable card
 -   Layers draggable card
--   Layers draggable card
 -   Stretchable pixels
 -   Layout options for Solid, Tables and Unique blocks
 -   Pallete block select input
