@@ -1,88 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MC Block Creator</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
-
-    <script src="./assets/libs/lullaby-ui.js"></script>
-    <script src="./assets/js/main.js"></script>
-</head>
-<body class="flex flex-col">
-    <div class="ly-flex-center w-screen h-[90vh]">
-        <div class="flex justify-between w-[90vw]">
-            <div class="flex justify-start relative w-full">
-                <div class="ly-card gap-2 p-2 min-w-64 h-64 overflow-y-hidden">
-                    <div class="w-full flex justify-between gap-2 items-center">
-                        <input type="text" value="diamond_block" name="search-block" id="search-block" spellcheck="false" placeholder="Texture name..." class="ly-input py-0.5 w-full">
-                        <div class="ly-card p-1 w-fit">
-                            <img src="./assets/images/blocks/diamond_block.png" block="diamond_block" id="block-search" alt="" class="block min-w-5 min-h-5 ly-bg-light-hover border ly-border-light cursor-pointer [&:hover]:ring-1 [&:hover]:ly-ring-light [&[selected]]:ring-2 [&[selected]]:ly-ring-dark">
-                        </div>
-                    </div>
-                    <div id="blocks" class="grid grid-cols-8 gap-2 p-3 w-full border ly-border-light rounded shadow overflow-y-scroll">
-                    </div>
-                </div>
-            </div>
-            <div class="ly-flex-center w-full">
-                <div id="block" class="rotate-180 border ly-border-dark flex flex-col gap-[0.02px] ly-bg-dark-border"></div>
-            </div>
-            <div class="flex items-end flex-col gap-2 justify-start relative w-full">
-                <div class="ly-card px-3 pt-2 pb-4 gap-1 w-64 h-fit">
-                    <h3 class="text-lg">Settings</h3>
-                    <label class="ly-card flex-row px-4 py-1 gap-1.5 w-full cursor-pointer select-none">
-                        <input type="checkbox" checked name="grid" id="grid" class="cursor-pointer">
-                        <p>Grid</p>
-                    </label>
-                    <label class="ly-card flex-row px-4 py-1 gap-1.5 w-full cursor-pointer select-none">
-                        <input type="checkbox" checked name="png" id="png" class="cursor-pointer">
-                        <p>PNG Background</p>
-                    </label>
-                </div>
-                <div class="ly-card px-3 pt-2 pb-4 gap-1 w-64 h-fit">
-                    <h3 class="text-lg">Block</h3>
-                    <div class="flex flex-col">
-                        <label for="block-name">Block name</label>
-                        <input type="text" value="custom_block" placeholder="Block name..." name="block-name" id="block-name" autocomplete="off" spellcheck="false" class="ly-input">
-                    </div>
-                    <div class="flex flex-col">
-                        <label for="block-base">Base block</label>
-                        <input type="text" placeholder="Block ID... (minecraft:stone)" name="block-base" id="block-base" autocomplete="off" spellcheck="false" class="ly-input">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <header class="ly-flex-center ly-card flex-row justify-between w-screen h-[10vh] px-[5vw] py-4">
-        <div class="w-full">
-            <div class="flex gap-2 items-center">
-                <div class="ly-card p-1">
-                    <img id="selected-block-img" class="w-6 h-6">
-                </div>
-                <p id="selected-block-name"></p>
-            </div>
-        </div>
-        <div class="w-full ly-flex-center gap-4">
-            <button id="download-mcfunction" class="ly-button text-nowrap">Download as .mcfunction</button>
-            <!-- <button id="download-datapack" class="ly-button text-nowrap">Download as data-pack</button> -->
-            <button id="block-copy" class="ly-button text-nowrap">Copy to Clipboard</button>
-            <button id="block-pickup" class="ly-button text-nowrap">Pickup</button>
-            <button id="block-fill" class="ly-button text-nowrap">Fill</button>
-            <button id="block-clear" class="ly-button text-nowrap">Clear</button>
-        </div>
-        <div class="w-full flex justify-end gap-2">
-            <a href="https://paypal.me/lucianobrumer" target="_blank" class="ly-button ly-flex-center gap-1 cursor-pointer pr-2.5">
-                <p>Donate ❤️</p>
-            </a>
-            <a href="https://github.com/lullaby6/mc-block-creator" target="_blank" class="ly-button ly-flex-center gap-1 cursor-pointer">
-                <iconify-icon class="text-lg" icon="mdi:github"></iconify-icon>
-                <p>Github</p>
-            </a>
-        </div>
-    </header>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
