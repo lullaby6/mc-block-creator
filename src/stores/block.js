@@ -18,7 +18,7 @@ const useBlockStore = create((set) => ({
     blockType: "SOLID",
     setBlockType: (newBlockType) => set({ blockType: newBlockType }),
 
-    faces: {
+	activeFaces: {
         south: true,
         north: true,
         east: true,
@@ -26,10 +26,10 @@ const useBlockStore = create((set) => ({
         up: true,
         down: true,
     },
-    setFaces: (newFaces) => set({ faces: newFaces }),
+    setActiveFaces: (newActiveFaces) => set({ activeFaces: newActiveFaces }),
 
-    setFace: (face, value) =>
-        set((state) => ({ faces: { ...state.faces, [face]: value } })),
+    setActiveFace: (face, value) =>
+        set((state) => ({ activeFaces: { ...state.activeFaces, [face]: value } })),
 
     reset: () =>
         set({
@@ -38,7 +38,7 @@ const useBlockStore = create((set) => ({
             baseBlock: "air",
             blockID: "custom_block",
             blockType: "SOLID",
-            faces: {
+            activeFaces: {
                 south: true,
                 north: true,
                 east: true,

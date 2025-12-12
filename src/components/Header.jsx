@@ -29,8 +29,8 @@ export default () => {
 	const blockIDStore = useBlockStore((state) => state.blockID);
 	const blockTypeStore = useBlockStore((state) => state.blockType);
 
-	const facesStore = useBlockStore((state) => state.faces);
-	const setFaces = useBlockStore((state) => state.setFaces);
+	const activeFacesStore = useBlockStore((state) => state.activeFaces);
+	const setActiveFaces = useBlockStore((state) => state.setActiveFaces);
 
 	const setPixels = useBlockStore((state) => state.setPixels);
 	const setBlockID = useBlockStore((state) => state.setBlockID);
@@ -52,7 +52,7 @@ export default () => {
 				if (json.blockType) setBlockType(json.blockType);
 				if (json.baseBlock !== undefined) setBaseBlock(json.baseBlock);
 
-				if (json.faces) setFaces(json.faces);
+				if (json.activeFaces) setActiveFaces(json.activeFaces);
 			} catch (error) {
 				console.error("Error importando JSON:", error);
 				alert("El archivo no es válido o está corrupto.");
@@ -97,7 +97,7 @@ export default () => {
 								blockTypeStore,
 								blockIDStore,
 								baseBlockStore,
-								facesStore
+								activeFacesStore
 							)
 						}>
 						<IconFileArrowRight className="text-neutral-700 size-5" />
@@ -112,7 +112,7 @@ export default () => {
 								blockTypeStore,
 								blockIDStore,
 								baseBlockStore,
-								facesStore
+								activeFacesStore
 							)
 						}>
 						<IconClipboard className="text-neutral-700 size-5" />
@@ -127,7 +127,7 @@ export default () => {
 								blockTypeStore,
 								blockIDStore,
 								baseBlockStore,
-								facesStore
+								activeFacesStore
 							)
 						}>
 						<IconDownload className="text-neutral-700 size-5" />
@@ -142,7 +142,7 @@ export default () => {
 								blockTypeStore,
 								blockIDStore,
 								baseBlockStore,
-								facesStore
+								activeFacesStore
 							)
 						}>
 						<IconClipboard className="text-neutral-700 size-5" />

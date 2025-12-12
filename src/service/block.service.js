@@ -30,7 +30,7 @@ function GenerateJSONObject(blockData, blockType, blockID, baseBlock, activeFace
         blockID: blockID || "custom_block",
         blockType: blockType,
         baseBlock: baseBlock,
-        faces: activeFaces,
+        activeFaces: activeFaces,
         pixels: blockData,
         timestamp: new Date().toISOString()
     };

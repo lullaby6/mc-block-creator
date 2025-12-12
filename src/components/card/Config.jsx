@@ -11,9 +11,9 @@ export default () => {
 	const baseBlockStore = useBlockStore((state) => state.baseBlock);
 	const setBaseBlockStore = useBlockStore((state) => state.setBaseBlock);
 
-	const facesStore = useBlockStore((state) => state.faces);
-	const setFacesStore = useBlockStore((state) => state.setFaces);
-	const setFaceStore = useBlockStore((state) => state.setFace);
+	const activeFacesStore = useBlockStore((state) => state.activeFaces);
+	const setActiveFacesStore = useBlockStore((state) => state.setActiveFaces);
+	const setActiveFaceStore = useBlockStore((state) => state.setActiveFace);
 
 	return (
 		<Card
@@ -54,23 +54,28 @@ export default () => {
 						Active Faces
 					</label>
 					<div className="grid grid-cols-2 gap-x-1 gap-y-0.5">
-						{Object.entries(facesStore).map(([face, isActive]) => (
-							<label
-								key={face}
-								className="flex items-center gap-2 cursor-pointer select-none">
-								<input
-									type="checkbox"
-									checked={isActive}
-									onChange={(e) =>
-										setFaceStore(face, e.target.checked)
-									}
-									className="accent-neutral-800 cursor-pointer"
-								/>
-								<span className="capitalize text-neutral-700">
-									{face}
-								</span>
-							</label>
-						))}
+						{Object.entries(activeFacesStore).map(
+							([face, isActive]) => (
+								<label
+									key={face}
+									className="flex items-center gap-2 cursor-pointer select-none">
+									<input
+										type="checkbox"
+										checked={isActive}
+										onChange={(e) =>
+											setActiveFaceStore(
+												face,
+												e.target.checked
+											)
+										}
+										className="accent-neutral-800 cursor-pointer"
+									/>
+									<span className="capitalize text-neutral-700">
+										{face}
+									</span>
+								</label>
+							)
+						)}
 					</div>
 				</div>
 			</div>
