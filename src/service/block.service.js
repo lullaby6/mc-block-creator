@@ -40,7 +40,6 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "") {
     let MCFunction = "";
     let faces = {};
 
-    // Normalización de caras según el tipo de bloque
     if (Array.isArray(blockData) && blockType !== "TABLE") {
         faces = { south: blockData, north: blockData, east: blockData, west: blockData, up: blockData, down: blockData };
     } else {
@@ -68,9 +67,14 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "") {
     }
 
     const markerTags = [
-        "mc_block_creator.custom_block", "mc_block_creator.custom_block.marker",
-        `mc_block_creator.custom_block.${blockID}`, `mc_block_creator.custom_block.marker.${blockID}`,
-        `mc_block_creator.custom_block.${UUID}`, `mc_block_creator.custom_block.marker.${UUID}`
+        "mc_block_creator.custom_block",
+        `mc_block_creator.custom_block.${blockID}`,
+        `mc_block_creator.custom_block.${UUID}`,
+        `mc_block_creator.custom_block.${blockID}.${UUID}`,
+        "mc_block_creator.custom_block.marker",
+        `mc_block_creator.custom_block.marker.${blockID}`,
+        `mc_block_creator.custom_block.marker.${UUID}`,
+        `mc_block_creator.custom_block.marker.${blockID}.${UUID}`,
     ].join('","');
 
     MCFunction += `execute align xyz run summon marker ~.5 ~.5 ~.5 {Tags:["${markerTags}"]}\n\n`;
@@ -106,9 +110,13 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "") {
 
             const pixelTags = [
                 "mc_block_creator.custom_block",
+                `mc_block_creator.custom_block.${blockID}`,
+                `mc_block_creator.custom_block.${UUID}`,
+                `mc_block_creator.custom_block.${blockID}.${UUID}`,
                 "mc_block_creator.custom_block.text_display",
-                `mc_block_creator.custom_block.text_display.${faceName}`,
-                `mc_block_creator.custom_block.text_display.${UUID}`
+                `mc_block_creator.custom_block.text_display.${blockID}`,
+                `mc_block_creator.custom_block.text_display.${UUID}`,
+                `mc_block_creator.custom_block.text_display.${blockID}.${UUID}`,
             ].join('","');
 
             MCFunction += `execute align xyz run summon text_display ~.5 ~.5 ~.5 {billboard:"fixed",default_background:0b,shadow:0b,see_through:0b,alignment:"center",Tags:["${pixelTags}"],brightness:{sky:15,block:15},transformation:{left_rotation:${rotation},right_rotation:[0f,0f,0f,1f],translation:[${x_f}f,${y_f}f,${z_f}f],scale:[${PIXEL_SCALE}f,${PIXEL_SCALE}f,${PIXEL_SCALE}f]},text:{"sprite":"block/${pixelBlockId}"},background:16383998}\n`;
