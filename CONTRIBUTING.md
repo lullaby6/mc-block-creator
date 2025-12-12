@@ -16,3 +16,9 @@ npm install
 ```
 
 4. Start the dev server.
+
+```bash
+npm run dev
+```
+
+5. Open the browser in `localhost:3000`.
