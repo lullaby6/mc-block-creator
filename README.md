@@ -28,13 +28,19 @@ This project uses [React](https://es.react.dev/) and [Vite](https://vitejs.dev/)
 git clone https://github.com/lullaby6/mc-block-creator.git
 ```
 
-3. Start the dev server.
+3. Install the packages.
+
+```bash
+npm install
+```
+
+4. Start the dev server.
 
 ```bash
 npm run dev
 ```
 
-4. Open the browser in `localhost:3000`.
+5. Open the browser in `localhost:3000`.
 
 ## License
 
