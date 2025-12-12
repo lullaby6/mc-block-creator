@@ -14,6 +14,7 @@ https://mc-block-creator.vercel.app/
 -   Pallete block select input
 -   Base block select input
 -   Support block_display and text_display
+-   Darkmode
 -   PWA
 
 ## Contributing
