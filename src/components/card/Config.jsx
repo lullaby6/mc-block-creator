@@ -20,6 +20,7 @@ export default () => {
 
 	const pixelsStore = useBlockStore((state) => state.pixels);
 	const setPixelsStore = useBlockStore((state) => state.setPixels);
+	const fillPixelsStore = useBlockStore((state) => state.fillPixels);
 
 	return (
 		<Card
@@ -93,7 +94,7 @@ export default () => {
 					<select
 						value={blockTypeStore}
 						onChange={(e) => {
-							setPixelsStore(pixelsStore.map(() => "air"));
+							fillPixelsStore("air");
 							setBlockTypeStore(e.target.value);
 						}}
 						className="border border-neutral-300 px-2 py-0.5 rounded shadow-sm focus:outline-none focus:border-neutral-400"

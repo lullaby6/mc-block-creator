@@ -35,7 +35,7 @@ function App() {
 											"west",
 										]}
 									/>
-									<Block faces={["top", "bottom"]} />
+									<Block faces={["up", "down"]} />
 								</>
 							)
 						)}

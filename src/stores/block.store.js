@@ -1,3 +1,4 @@
+import { FACES } from "@/config";
 import { create } from "zustand";
 
 const useBlockStore = create((set) => ({
@@ -8,6 +9,46 @@ const useBlockStore = create((set) => ({
     setPixels: (newPixels) => set({ pixels: newPixels }),
     resetPixels: () =>
         set({ pixels: Array.from({ length: 256 }).map(() => "air") }),
+    setPixel: (index, value) => set((state) => {
+        if (Array.isArray(state.pixels)) {
+            const newPixels = [...state.pixels]
+
+            newPixels[index] = value
+
+            return {
+                pixels: newPixels
+            }
+        } else {
+            const newPixels = {...state.pixels}
+
+            state.selectedFaces.forEach(face => {
+                newPixels[face][index] = value
+            })
+
+            return {
+                pixels: newPixels
+            }
+        }
+    }),
+    fillPixels: (value) => set((state) => {
+        if (Array.isArray(state.pixels)) {
+            const newPixels = [...state.pixels].map(() => value)
+
+            return {
+                pixels: newPixels
+            }
+        } else {
+            const newPixels = {...state.pixels}
+
+            state.selectedFaces.forEach(face => {
+                newPixels[face] = [...newPixels[face]].map(() => value)
+            })
+
+            return {
+                pixels: newPixels
+            }
+        }
+    }),
 
     baseBlock: "air",
     setBaseBlock: (newBaseBlock) => set({ baseBlock: newBaseBlock }),
@@ -16,7 +57,32 @@ const useBlockStore = create((set) => ({
     setBlockID: (newblockID) => set({ blockID: newblockID }),
 
     blockType: "SOLID",
-    setBlockType: (newBlockType) => set({ blockType: newBlockType }),
+    setBlockType: (newBlockType) => set(state => {
+        let newPixels;
+
+        switch (newBlockType) {
+            case "SOLID":
+                newPixels = Array.from({ length: 256 }).map(() => "air")
+
+                break;
+
+            case "TABLE":
+                newPixels = {}
+
+                FACES.forEach(face => {
+                    newPixels[face] = Array.from({ length: 256 }).map(() => "air")
+                })
+
+                break;
+
+            default:
+                newPixels = Array.from({ length: 256 }).map(() => "air")
+
+                break;
+        }
+
+        return { blockType: newBlockType, pixels: newPixels }
+    }),
 
 	activeFaces: {
         south: true,
@@ -34,6 +100,9 @@ const useBlockStore = create((set) => ({
     tool: "PENCIL",
     setTool: (newTool) => set({ tool: newTool }),
 
+    selectedFaces: [],
+    setSelectedFaces: (newSelectedFaces) => set({ selectedFaces: newSelectedFaces }),
+
     reset: () =>
         set({
             block: "diamond_block",
@@ -50,6 +119,7 @@ const useBlockStore = create((set) => ({
                 down: true,
             },
             tool: "PENCIL",
+            selectedFaces: []
         }),
 }));
 

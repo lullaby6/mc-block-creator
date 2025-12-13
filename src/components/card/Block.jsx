@@ -6,51 +6,37 @@ export default ({ faces = [] }) => {
 	const blockStore = useBlockStore((state) => state.block);
 	const setBlockStore = useBlockStore((state) => state.setBlock);
 	const pixelsStore = useBlockStore((state) => state.pixels);
+	const setPixelStore = useBlockStore((state) => state.setPixel);
 	const setPixelsStore = useBlockStore((state) => state.setPixels);
+	const fillPixelsStore = useBlockStore((state) => state.fillPixels);
 
 	const toolStore = useBlockStore((state) => state.tool);
 	const setToolStore = useBlockStore((state) => state.setTool);
 
+	const setSelectedFacesStore = useBlockStore(
+		(state) => state.setSelectedFaces
+	);
+
 	const [clicking, setClicking] = useState(false);
 
+	const lastIndex = useRef(null);
+
+	useEffect(() => {
+		const up = () => {
+			setClicking(false);
+			lastIndex.current = null;
+		};
+
+		window.addEventListener("mouseup", up);
+		return () => window.removeEventListener("mouseup", up);
+	}, []);
+
 	function setPixel(index, value) {
-		if (faces.length === 0) {
-			if (Array.isArray(pixelsStore)) {
-				const newPixelsArray = [...pixelsStore];
+		console.log(`asd ${faces} ${index} ${value}`);
 
-				newPixelsArray[index] = value;
+		setSelectedFacesStore(faces);
 
-				setPixelsStore(newPixelsArray);
-			} else {
-				const newPixelsArray = [...pixelsStore["south"]];
-
-				newPixelsArray[index] = value;
-
-				setPixelsStore(newPixelsArray);
-			}
-		} else {
-			if (Array.isArray(pixelsStore)) {
-				const newPixelsArray = [...pixelsStore];
-
-				newPixelsArray[index] = value;
-
-				const newPixelsObject = {};
-
-				faces.forEach((face) => {
-					newPixelsObject[face] = [...newPixelsArray];
-				});
-
-				setPixelsStore(newPixelsObject);
-			} else {
-				const newPixelsObject = { ...pixelsStore };
-
-				faces.forEach((face) => {
-					newPixelsObject[face][index] = value;
-				});
-
-				setPixelsStore(newPixelsObject);
-			}
-		}
+		setPixelStore(index, value);
 	}
 
 	useEffect(() => {
@@ -75,7 +61,7 @@ export default ({ faces = [] }) => {
 				break;
 
 			case "DROP":
-				setPixelsStore(pixelsStore.map((pixel) => blockStore));
+				fillPixelsStore(blockStore);
 
 				setToolStore("PENCIL");
 
@@ -91,6 +77,56 @@ export default ({ faces = [] }) => {
 		}
 	}
 
+	function RenderPixels() {
+		let pixels = [];
+		if (Array.isArray(pixelsStore)) {
+			pixels = [...pixelsStore];
+		} else {
+			const face = faces[0];
+
+			console.log(Object.keys(pixelsStore), face);
+
+			if (face in pixelsStore) {
+				pixels = [...pixelsStore[face]];
+			} else {
+				console.log("WEY", face);
+			}
+
+			// pixels = [...pixelsStore[faces[0]]];
+		}
+
+		console.log(pixels);
+
+		return pixels.map((pixel, index) => (
+			<button
+				key={index}
+				className={`aspect-square cursor-pointer ${
+					!pixel || pixel === "air"
+						? "outline outline-neutral-300 hover:outline-neutral-600"
+						: ""
+				}`}
+				onMouseDown={() => {
+					lastIndex.current = index;
+					handlePixelClick(index);
+				}}
+				onMouseOver={() => {
+					if (!clicking) return;
+					if (lastIndex.current === index) return;
+
+					lastIndex.current = index;
+					handlePixelClick(index);
+				}}>
+				<img
+					src={`/assets/images/blocks/${pixel}.png`}
+					alt=""
+					className="aspect-square h-full w-full select-none pixelated"
+					draggable="false"
+					onError={() => setPixel(index, "air")}
+				/>
+			</button>
+		));
+	}
+
 	return (
 		<div>
 			{faces.length > 0 && (
@@ -103,30 +139,7 @@ export default ({ faces = [] }) => {
 				// onMouseUp={() => setClicking(false)}
 				// onMouseLeave={() => setClicking(false)}
 				onContextMenu={(event) => event.preventDefault()}>
-				{pixelsStore.map((pixel, index) => (
-					<button
-						key={index}
-						className={`aspect-square cursor-pointer ${
-							!pixel || pixel === "air"
-								? "outline outline-neutral-300 hover:outline-neutral-600"
-								: ""
-						}`}
-						onMouseDown={() => handlePixelClick(index)}
-						onMouseEnter={(event) => {
-							if (clicking) {
-								event.preventDefault();
-								handlePixelClick(index);
-							}
-						}}>
-						<img
-							src={`/assets/images/blocks/${pixel}.png`}
-							alt=""
-							className="aspect-square h-full w-sull select-none pixelated"
-							draggable="false"
-							onError={() => setPixel(index, "air")}
-						/>
-					</button>
-				))}
+				<RenderPixels />
 			</div>
 		</div>
 	);
