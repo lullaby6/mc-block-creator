@@ -69,7 +69,7 @@ export default ({
 				</button>
 			</header>
 
-			{isOpen && <div className="p-1">{children}</div>}
+			{isOpen && <div className="p-1 !pt-0">{children}</div>}
 		</div>
 	);
 };

@@ -2,7 +2,7 @@ import { IconSettings } from "@tabler/icons-react";
 import { useState } from "react";
 
 import Card from "@/components/Card";
-import useBlockStore from "@/stores/block";
+import useBlockStore from "@/stores/block.store";
 
 export default () => {
 	const blockIDStore = useBlockStore((state) => state.blockID);
@@ -14,6 +14,12 @@ export default () => {
 	const activeFacesStore = useBlockStore((state) => state.activeFaces);
 	const setActiveFacesStore = useBlockStore((state) => state.setActiveFaces);
 	const setActiveFaceStore = useBlockStore((state) => state.setActiveFace);
+
+	const blockTypeStore = useBlockStore((state) => state.blockType);
+	const setBlockTypeStore = useBlockStore((state) => state.setBlockType);
+
+	const pixelsStore = useBlockStore((state) => state.pixels);
+	const setPixelsStore = useBlockStore((state) => state.setPixels);
 
 	return (
 		<Card
@@ -77,6 +83,26 @@ export default () => {
 							)
 						)}
 					</div>
+				</div>
+
+				<div className="flex flex-col gap-0.5">
+					<label className="text-sm text-neutral-500">
+						Block Type
+					</label>
+
+					<select
+						value={blockTypeStore}
+						onChange={(e) => {
+							setPixelsStore(pixelsStore.map(() => "air"));
+							setBlockTypeStore(e.target.value);
+						}}
+						className="border border-neutral-300 px-2 py-0.5 rounded shadow-sm focus:outline-none focus:border-neutral-400"
+						placeholder="diamond_block"
+						spellCheck="false"
+						autoComplete="false">
+						<option value="SOLID">Solid</option>
+						<option value="TABLE">Table</option>
+					</select>
 				</div>
 			</div>
 		</Card>

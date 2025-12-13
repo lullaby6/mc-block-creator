@@ -1,3 +1,5 @@
+import { capitalize } from "@/utils/string";
+
 const PIXEL_SCALE = 0.3125;
 const PIXEL_STEP = 0.0625;
 const MAIN_START = -0.4765;
@@ -93,6 +95,8 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", activ
 
         if (!pixels || !Array.isArray(pixels)) continue;
 
+        MCFunction += `\n# ${capitalize(faceName)}\n\n`;
+
         const rotation = FACE_ROTATIONS[faceName] || FACE_ROTATIONS.south;
 
         for (let i = 0; i < pixels.length; i++) {
@@ -134,7 +138,7 @@ function GenerateMCFunction(blockData, blockType, blockID, baseBlock = "", activ
         }
     }
 
-    MCFunction += `\nexecute as @e[tag=mc_block_creator.custom_block.text_display.${UUID}] run ride @s mount @n[tag=mc_block_creator.custom_block.marker.${UUID}]`;
+    MCFunction += `\nexecute as @e[tag=mc_block_creator.custom_block.text_display.${blockID},distance=..1] run ride @s mount @n[tag=mc_block_creator.custom_block.marker.${blockID}]`;
     return MCFunction;
 }
 

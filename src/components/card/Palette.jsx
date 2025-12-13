@@ -4,15 +4,16 @@ import { useDebounce } from "use-debounce";
 
 import Card from "@/components/Card";
 
-import { colors, blocks } from "@/config";
+import { COLORS, BLOCKS } from "@/config";
 
-import useBlockStore from "@/stores/block";
+import useBlockStore from "@/stores/block.store";
 
 const defaultPalleteInputValue = "diamond_block";
 
 export default () => {
 	const blockStore = useBlockStore((state) => state.block);
 	const setBlockStore = useBlockStore((state) => state.setBlock);
+	const setToolStore = useBlockStore((state) => state.setTool);
 
 	const [palleteInputValue, setPalleteInputValue] = useState(
 		defaultPalleteInputValue
@@ -50,9 +51,10 @@ export default () => {
 							palleteInputValue === "" ||
 							palleteInputValue === "air"
 						}
-						onClick={() =>
-							setBlockStore(palleteInputDebouncedValue)
-						}>
+						onClick={() => {
+							setBlockStore(palleteInputDebouncedValue);
+							setToolStore("PENCIL");
+						}}>
 						<img
 							src={`/assets/images/blocks/${palleteBlockValue}.png`}
 							className="aspect-square select-none size-5 pixelated"
@@ -63,8 +65,8 @@ export default () => {
 				</div>
 
 				<div className="grid grid-cols-8 gap-1 max-h-70 overflow-y-auto pb-2 pr-1">
-					{blocks.map((block) =>
-						colors.map((color) => (
+					{BLOCKS.map((block) =>
+						COLORS.map((color) => (
 							<button
 								key={`${color}-${block}`}
 								className={`aspect-square size-7 flex justify-center items-center cursor-pointer rounded shadow-sm hover:bg-neutral-200 border ${
@@ -72,9 +74,10 @@ export default () => {
 										? "border-neutral-600"
 										: "border-neutral-300"
 								}`}
-								onClick={() =>
-									setBlockStore(`${color}_${block}`)
-								}>
+								onClick={() => {
+									setBlockStore(`${color}_${block}`);
+									setToolStore("PENCIL");
+								}}>
 								<img
 									src={`/assets/images/blocks/${color}_${block}.png`}
 									className="aspect-square select-none size-5 pixelated"

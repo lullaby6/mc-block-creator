@@ -18,7 +18,7 @@ import {
 	ValidateBlockJSON,
 } from "@/service/block.service";
 
-import useBlockStore from "@/stores/block";
+import useBlockStore from "@/stores/block.store";
 
 export default () => {
 	const fileInputRef = useRef(null);
@@ -39,9 +39,11 @@ export default () => {
 
 	const handleImportJSON = (e) => {
 		const file = e.target.files?.[0];
+
 		if (!file) return;
 
 		const reader = new FileReader();
+
 		reader.onload = (event) => {
 			try {
 				const rawJson = JSON.parse(event.target.result);
@@ -54,11 +56,14 @@ export default () => {
 
 				if (json.activeFaces) setActiveFaces(json.activeFaces);
 			} catch (error) {
-				console.error("Error importando JSON:", error);
-				alert("El archivo no es válido o está corrupto.");
+				console.error("Error importing JSON:", error);
+
+				alert("Invalid file.");
 			}
 		};
+
 		reader.readAsText(file);
+
 		e.target.value = "";
 	};
 

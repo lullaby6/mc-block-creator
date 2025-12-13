@@ -1,4 +1,4 @@
-const colors = [
+const COLORS = [
 	"white",
 	"light_gray",
 	"gray",
@@ -17,7 +17,7 @@ const colors = [
 	"pink",
 ];
 
-const blocks = [
+const BLOCKS = [
 	"wool",
 	"terracotta",
 	"concrete",
@@ -27,4 +27,19 @@ const blocks = [
 	"shulker_box",
 ];
 
-export { colors, blocks };
+const FACES = [
+	"up",
+	"down",
+	"north",
+	"east",
+	"south",
+	"west",
+	"ceiling",
+	"floor",
+];
+
+const TOOLS = ["PENCIL", "PICKUP", "DROP", "ERASER"];
+
+const TYPES = ["SOLID", "TABLE", "UNIQUE"];
+
+export { COLORS, BLOCKS, FACES, TOOLS, TYPES };

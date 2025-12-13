@@ -31,6 +31,9 @@ const useBlockStore = create((set) => ({
     setActiveFace: (face, value) =>
         set((state) => ({ activeFaces: { ...state.activeFaces, [face]: value } })),
 
+    tool: "PENCIL",
+    setTool: (newTool) => set({ tool: newTool }),
+
     reset: () =>
         set({
             block: "diamond_block",
@@ -46,6 +49,7 @@ const useBlockStore = create((set) => ({
                 up: true,
                 down: true,
             },
+            tool: "PENCIL",
         }),
 }));
 
