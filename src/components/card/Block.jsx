@@ -117,7 +117,7 @@ export default ({ faces = [] }) => {
 					handlePixelClick(index);
 				}}>
 				<img
-					src={`/assets/images/blocks/${pixel}.png`}
+					src={`./assets/images/blocks/${pixel}.png`}
 					alt=""
 					className="aspect-square h-full w-full select-none pixelated"
 					draggable="false"

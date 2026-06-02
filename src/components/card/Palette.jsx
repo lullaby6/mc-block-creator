@@ -56,7 +56,7 @@ export default () => {
 							setToolStore("PENCIL");
 						}}>
 						<img
-							src={`/assets/images/blocks/${palleteBlockValue}.png`}
+							src={`./assets/images/blocks/${palleteBlockValue}.png`}
 							className="aspect-square select-none size-5 pixelated"
 							draggable="false"
 							onError={() => setPalleteBlockValue("air")}
@@ -79,7 +79,7 @@ export default () => {
 									setToolStore("PENCIL");
 								}}>
 								<img
-									src={`/assets/images/blocks/${color}_${block}.png`}
+									src={`./assets/images/blocks/${color}_${block}.png`}
 									className="aspect-square select-none size-5 pixelated"
 									draggable="false"
 								/>
