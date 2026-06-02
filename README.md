@@ -2,7 +2,7 @@
 
 > Custom Block Generator with Display Entities for Minecraft Java Edition
 
-https://mc-block-creator.vercel.app/
+[Go To MC Block Creator](https://mc-block-creator.vercel.app/)
 
 ## Future features
 
